@@ -1,0 +1,77 @@
+language: android
+dist: trusty
+jdk: oraclejdk8
+
+env:
+    global:
+    - ANDROID_API_LEVEL=29
+    - ANDROID_BUILD_TOOLS=29.0.2
+
+android:
+    components:
+    - tools
+    - platform-tools
+    - build-tools-$ANDROID_BUILD_TOOLS
+    - android-$ANDROID_API_LEVEL
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+
+before_cache:
+    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+    directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
+branches:
+    only:
+    - master
+    - alpha
+    - travis
+
+script:
+    - echo $TRAVIS_TAG
+    - echo $TRAVIS_COMMIT
+    - echo $TRAVIS_BUILD_NUMBER
+    - ./gradlew build check
+
+before_deploy:
+  - export APP_VERSION=$(./gradlew :app:printVersionName)
+  - echo Version $APP_VERSION
+deploy:
+    - provider: travis
+        on:
+            branch: travis
+    - provider: github
+        overwrite: true
+        skip_cleanup: true
+        name: "$APP_VERSION"
+        tag_name: "$APP_VERSION"
+        on:
+            branch: github
+    - provider: develop
+        on:
+            branch: develop
+    - provider: alpha
+        on:
+            tags: true
+            branch: master
+            condition: $TRAVIS_TAG =~ ^\d{0,2}\.\d{0,2}\.\d{0,4}-alpha$
+    - provider: beta
+        on:
+            tags: true
+            branch: master
+            condition: $TRAVIS_TAG =~ ^\d{0,2}\.\d{0,2}\.\d{0,4}-beta$
+    - provider: prod
+        on:
+            tags: true
+            branch: master
+            condition: $TRAVIS_TAG =~ ^\d{0,2}\.\d{0,2}\.\d{0,4}$

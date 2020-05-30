@@ -34,8 +34,6 @@ cache:
 branches:
     only:
     - master
-    - alpha
-    - travis
 
 script:
     - echo $TRAVIS_TAG

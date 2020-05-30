@@ -36,7 +36,11 @@ branches:
     - master
 
 script:
-    - echo $TRAVIS_TAG
-    - echo $TRAVIS_COMMIT
-    - echo $TRAVIS_BUILD_NUMBER
+    - echo Tag $TRAVIS_TAG
+    - echo Commit $TRAVIS_COMMIT
+    - echo Build Number $TRAVIS_BUILD_NUMBER
     - ./gradlew build check
+
+before_deploy:
+    - export APP_VERSION=$(./gradlew :app:printVersionName)
+    - echo Version $APP_VERSION

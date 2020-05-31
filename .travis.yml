@@ -39,7 +39,6 @@ script:
     - echo Commit $TRAVIS_COMMIT
     - echo Build Number $TRAVIS_BUILD_NUMBER
     - ./gradlew assembleRelease
-    - find . -iname "*.apk" | echo
 
 before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -54,7 +53,7 @@ deploy:
     api-key: $GITHUB_API_KEY
     file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/release/app-release.apk
     skip_cleanup: true
-    name: $APP_VERSION
+    name: Release Build
     body: Automatic build of $TRAVIS_BRANCH ($TRAVIS_COMMIT) built by Travis CI on $(date +'%F %T %Z').
     prerelease: true
     overwrite: true

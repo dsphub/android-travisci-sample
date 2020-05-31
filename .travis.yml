@@ -56,6 +56,6 @@ deploy:
     prerelease: true
     overwrite: true
     target_commitish: $TRAVIS_COMMIT
-    draft: true
+
 after_deploy:
     - rm -rf $TRAVIS_BUILD_DIR/app/build/output

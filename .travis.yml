@@ -34,7 +34,7 @@ branches:
 before_install:
     - openssl aes-256-cbc -K $encrypted_c80f59e584b7_key -iv $encrypted_c80f59e584b7_iv -in keystore.jks.enc -out keystore.jks -d
 
-script: // run the build script
+script:
     - echo Tag $TRAVIS_TAG
     - echo Commit $TRAVIS_COMMIT
     - echo Build Number $TRAVIS_BUILD_NUMBER

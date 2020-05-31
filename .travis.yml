@@ -40,6 +40,7 @@ script:
     - echo Commit $TRAVIS_COMMIT
     - echo Build Number $TRAVIS_BUILD_NUMBER
     - ./gradlew build check
+    - find . -iname "*.apk"
 
 before_deploy:
     - export APP_VERSION=$(./gradlew :app:printVersionName)

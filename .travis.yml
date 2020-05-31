@@ -52,7 +52,7 @@ before_deploy:
 deploy:
     provider: releases
     api-key: $GITHUB_API_KEY
-    file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/debug/app-release.apk
+    file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/release/app-release.apk
     skip_cleanup: true
     name: $APP_VERSION
     body: Automatic build of $TRAVIS_BRANCH ($TRAVIS_COMMIT) built by Travis CI on $(date +'%F %T %Z').

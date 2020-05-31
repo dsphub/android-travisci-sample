@@ -47,7 +47,7 @@ before_deploy:
     - echo Version $APP_VERSION
 
 deploy:
-    provider: debug
+    provider: releases
     api-key: $GITHUB_API_KEY
     file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/debug/app-debug.apk
     skip_cleanup: true

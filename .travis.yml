@@ -44,16 +44,12 @@ before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
     - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
-before_deploy:
-    - export APP_VERSION=$(./gradlew :app:printVersionName)
-    - echo Version $APP_VERSION
-
 deploy:
     provider: releases
     api-key: $GITHUB_API_KEY
     file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/release/app-release.apk
     skip_cleanup: true
-    name: Release Build $APP_VERSION
+    name: Release Build
     body: Automatic build of $TRAVIS_BRANCH ($TRAVIS_COMMIT) built by Travis CI on $(date +'%F %T %Z').
     prerelease: true
     overwrite: true
